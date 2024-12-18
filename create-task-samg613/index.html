@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam Gusel CT</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Song Manager</h1>
+
+    <div>
+        <label for="title">Song Title: </label>
+        <input type="text" id="title" placeholder="Enter song title">
+    </div>
+    <div>
+        <label for="artist">Artist: </label>
+        <input type="text" id="artist" placeholder="Enter artist name">
+    </div>
+    <div>
+        <label for="year">Year: </label>
+        <input type="number" id="year" placeholder="Enter year">
+    </div>
+    <button onclick="addSong()">Add Song</button>
+
+    <div class="song-list">
+        <h3>Song List:</h3>
+        <ul id="songs-list"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
