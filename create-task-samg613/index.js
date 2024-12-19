@@ -1,41 +1,73 @@
 let songs = [];
 
 function addSong() {
-  const title = document.getElementById("title").value;
+  const title = document.getElementById("songTitle").value;
   const artist = document.getElementById("artist").value;
-  const year = document.getElementById("year").value;
+  const genre = document.getElementById("genre").value;
+  const releaseDate = document.getElementById("releaseDate").value;
 
-  if (title === "" || artist === "" || year === "") {
-    alert("Please fill in all fields.");
-    return;
-  }
+  const song = {
+    title: title,
+    artist: artist,
+    genre: genre,
+    releaseDate: releaseDate,
+  };
 
-  const song = { title, artist, year };
   songs.push(song);
 
-  document.getElementById("title").value = "";
+  document.getElementById("songTitle").value = "";
   document.getElementById("artist").value = "";
-  document.getElementById("year").value = "";
+  document.getElementById("genre").value = "";
+  document.getElementById("releaseDate").value = "";
 
-  displaySongs();
+  displaySongs(songs);
 }
 
-function displaySongs() {
-  const songListElement = document.getElementById("songs-list");
-  songListElement.innerHTML = "";
+function displaySongs(songList) {
+  const songListContainer = document.getElementById("songList");
 
-  songs.forEach((song, index) => {
+  songListContainer.innerHTML = "";
+
+  songList.forEach((song, index) => {
     const songHTML = `
-            <li class="song">
-                ${song.title} by ${song.artist} (${song.year})
-                <button onclick="removeSong(${index})">Remove</button>
-            </li>
+            <div class="song">
+                <strong>${song.title}</strong> by ${song.artist} - Genre: ${song.genre} - Released: ${song.releaseDate}
+                <button onclick="deleteSong(${index})" class="delete-button">Delete</button>
+            </div>
         `;
-    songListElement.insertAdjacentHTML("beforeend", songHTML);
+
+    songListContainer.insertAdjacentHTML("beforeend", songHTML);
   });
 }
 
-function removeSong(index) {
+function deleteSong(index) {
   songs.splice(index, 1);
-  displaySongs();
+
+  displaySongs(songs);
 }
+
+function filterSongs() {
+  const filterGenre = document
+    .getElementById("filterGenre")
+    .value.toLowerCase();
+  const filterYear = document.getElementById("filterYear").value;
+
+  const filteredSongs = songs.filter((song) => {
+    let genreMatch = true;
+    let yearMatch = true;
+
+    if (filterGenre && !song.genre.toLowerCase().includes(filterGenre)) {
+      genreMatch = false;
+    }
+
+    if (filterYear && !song.releaseDate.startsWith(filterYear)) {
+      yearMatch = false;
+    }
+
+    return genreMatch && yearMatch;
+  });
+
+  displaySongs(filteredSongs);
+}
+
+document.getElementById("addSongButton").addEventListener("click", addSong);
